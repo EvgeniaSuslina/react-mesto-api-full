@@ -9,7 +9,7 @@ const routesUsers = require('./routes/users');
 const routesCards = require('./routes/cards');
 const NotFoundError = require('./utils/errors/not_found');
 const { createUser, login } = require('./controllers/users');
-
+const { requestLogger, errorLogger } = require('./middlewares/logger')
 const regexUrl = /^(http[s]:\/\/)?[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]+(\.[a-zA-Z]{2,}([a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=])*)/;
 
 const app = express();
@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
+
+app.use(requestLogger);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -47,6 +49,8 @@ app.use('/cards', routesCards);
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемые данные не найдены'));
 });
+
+app.use(errorLogger);
 
 app.use(errors());
 
