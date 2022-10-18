@@ -1,0 +1,17 @@
+.group__element-like{    
+    border:none;
+    padding:0;
+    width:22px;
+    height: 19px;
+    background-image: url(../../../images/Vector4.svg);
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 1;
+}
+
+.group__element-like:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}

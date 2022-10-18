@@ -1,0 +1,12 @@
+.error-message{
+    margin: 0px, 22px, 0px, 22px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
+}
+@media screen and (min-width:624px) {
+    .error-message{
+        margin: 0px, 36px, 0px, 36px;
+    }
+ }

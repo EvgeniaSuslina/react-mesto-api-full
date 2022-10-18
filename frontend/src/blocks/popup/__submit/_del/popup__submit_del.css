@@ -1,0 +1,9 @@
+.popup__submit_del{
+    margin: 0 22px 25px 22px;
+}
+
+@media screen and (min-width:624px) {
+    .popup__submit_del{
+    margin: 38px 36px 36px 36px;
+    }
+}

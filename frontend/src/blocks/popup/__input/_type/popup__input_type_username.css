@@ -1,0 +1,8 @@
+.popup__input_type_username{
+    height:27px;
+    box-sizing: border-box;
+    width:100%;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;     
+}

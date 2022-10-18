@@ -1,0 +1,16 @@
+.header__text{
+    font-family: Inter, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;  
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #FFFFFF;
+}
+
+@media screen and (min-width:624px) {
+    .header__text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}

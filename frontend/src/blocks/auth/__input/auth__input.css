@@ -1,0 +1,23 @@
+.auth__input{
+    font-family: Inter, Arial, sans-serif;    
+    width:358px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 57px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #CCCCCC;
+}
+
+.auth__input:last-of-type{
+    margin-bottom: 216px;
+}
+
+@media screen and (max-width:624px) {
+    .auth__input{
+        width: 260px;     
+    }
+ }

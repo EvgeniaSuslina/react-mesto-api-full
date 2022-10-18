@@ -1,0 +1,9 @@
+.popup__title_type_del{    
+    margin: 22px 25px;    
+}
+
+@media screen and (min-width:624px) {
+    .popup__title_type_del{        
+        margin: 34px 64px auto 36px;
+    }
+ }

@@ -1,0 +1,9 @@
+.group__like-counter{
+    font-weight: 400;
+    margin: 0;
+    color: #000;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    white-space: nowrap;
+}

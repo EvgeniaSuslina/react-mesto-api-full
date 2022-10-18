@@ -1,0 +1,6 @@
+.group__element{
+   margin: 0;
+   overflow: hidden;
+   border-radius: 10px;
+   position: relative;
+}

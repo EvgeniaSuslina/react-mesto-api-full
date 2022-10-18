@@ -1,0 +1,13 @@
+.group__element-caption{
+    height: 80px;
+    box-sizing: border-box;
+    position: relative;
+    background: #FFFFFF;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 1fr 22px;
+    grid-template-rows: 80px;
+    justify-content: space-between;
+    padding: 0 20px;
+    
+}

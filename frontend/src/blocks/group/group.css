@@ -1,0 +1,18 @@
+.group{    
+    margin-top: 36px;
+}
+@media screen and (max-width: 1280px){
+    .group{   
+        margin-top: 51px;      
+    }  
+}
+@media screen and (max-width: 768px){
+    .group{        
+        margin-top: 45px;         
+    }  
+}
+@media screen and (max-width: 624px){
+    .group{  
+        margin: 40px 19px auto 19px; 
+    }  
+}

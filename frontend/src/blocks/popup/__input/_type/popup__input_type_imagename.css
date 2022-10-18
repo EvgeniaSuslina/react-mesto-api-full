@@ -1,0 +1,16 @@
+.popup__input_type_imagename{
+    height:27px;
+    width:100%;
+    box-sizing: border-box;
+    /*margin: 75px 22px 30px 22px;*/
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;  
+}
+
+@media screen and (min-width:624px) {
+    .popup__input_type_imagename{
+       /* margin: 54px 36px 30px 36px;*/
+    }
+ }

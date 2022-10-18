@@ -1,0 +1,7 @@
+.group__element-like_liked{
+    background-image: url(../../../../images/liked.svg);
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}

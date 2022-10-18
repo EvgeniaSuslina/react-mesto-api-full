@@ -1,0 +1,19 @@
+.group__element-trash{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:18px;
+    height:19px;
+    border:none;
+    background-image: url(../../../images/Group.svg);
+    background-color: rgba(0, 0, 0, .0);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 1;
+}
+
+.group__element-trash:hover{
+    cursor: pointer;
+    opacity: 0.6;
+ }

@@ -1,0 +1,10 @@
+.group__element-img{
+    width: 282px;
+    height: 282px;
+    object-fit: cover;
+    margin-bottom: -4px;
+}
+
+.group__element-img:hover{
+cursor: pointer;
+}

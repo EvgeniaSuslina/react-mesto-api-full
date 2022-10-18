@@ -1,0 +1,6 @@
+@media screen and (min-width:624px) {
+    .header__link_auth {
+        margin-top: 10px;
+        color: #FFFFFF;
+    }
+}
