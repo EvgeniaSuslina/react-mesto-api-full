@@ -3,26 +3,38 @@ const mongoose = require('mongoose');
 const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const auth = require('./middlewares/auth');
 const routesUsers = require('./routes/users');
 const routesCards = require('./routes/cards');
 const NotFoundError = require('./utils/errors/not_found');
 const { createUser, login } = require('./controllers/users');
-const { requestLogger, errorLogger } = require('./middlewares/logger')
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const allowedCors = require('./utils/allowedcors');
 const regexUrl = /^(http[s]:\/\/)?[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]+(\.[a-zA-Z]{2,}([a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=])*)/;
 
 const app = express();
 
+app.use(cookieParser());
+
 const { PORT = 3000 } = process.env;
+
+app.use(cors(allowedCors));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+}); 
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
