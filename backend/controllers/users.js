@@ -7,9 +7,11 @@ const UnauthorizedError = require('../utils/errors/unauthorized');
 const NotFoundError = require('../utils/errors/not_found');
 const ConflictError = require('../utils/errors/conflict');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.send(users))
+    .then((result) => res.send(result))
     .catch(next);
 };
 
@@ -31,54 +33,37 @@ module.exports.getUserById = (req, res, next) => {
     });
 };
 
-module.exports.getCurrentUserInfo = (req, res, next) => {
-  const userId = req.user._id;
-  User.findOne({ _id: userId })
-    .then((user) => {
-      if (user) {
-        res.send({ data: user });
-      } else {
-        next(new NotFoundError('Пользователь по указанному _id не найден.'));
-      }
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
-      }
-    });
-};
-
 module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  bcrypt
-    .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
-    }))
-    .then((user) => res.status(200).send({
-      email: user.email,
-      name: user.name,
-      about: user.about,
-      avatar: user.avatar,
-      _id: user._id,
-    }))
-    .catch((err) => {
-      if (err.code === 11000) {
-        next(new ConflictError('Почта уже существует'));
-      } else if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
+
+  User.find({ email })
+    .then((response) => {
+      if (response.length === 0) {
+        bcrypt.hash(password, 10)
+        .then((hash) => User.create({
+          name,
+          about,
+          avatar,
+          email,
+          password: hash,
+        }))
+        .then((user) => User.findOne({ _id: user._id }))
+        .then((user) => {
+          res.send(user);
+        })
+        .catch((err) => {
+          if (err.code === 11000) {
+            next(new ConflictError('Почта уже существует'));
+          } else if (err.name === 'ValidationError') {
+            next(new BadRequestError('Переданы некорректные данные'));
+          } else {
+            next(err);
+          }
+        });
       }
-    });
+    })    
 };
 
 module.exports.updateProfile = (req, res, next) => {
@@ -90,7 +75,7 @@ module.exports.updateProfile = (req, res, next) => {
   )
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.send( user );
       } else {
         next(new NotFoundError('Пользователь не найден.'));
       }
@@ -115,7 +100,7 @@ module.exports.updateAvatar = (req, res, next) => {
   )
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.send( user );
       } else {
         next(new NotFoundError('Пользователь не найден.'));
       }
@@ -136,17 +121,33 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', {
-        expiresIn: '7d',
-      });
-      res
-        .cookie('jwt', token, {
-          maxage: 3600000 * 24 * 7,
-          httpOnly: true,
-        })
-        .send({ message: 'Авторизация успешна' });
+      const token = jwt.sign(
+        { _id: user._id }, 
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+        { expiresIn: '7d' },
+      );
+      res.send({ token });
     })
     .catch(() => {
       next(new UnauthorizedError('Почта или пароль введены неправильно'));
+    });
+};
+
+module.exports.getCurrentUserInfo = (req, res, next) => {
+  const userId = req.user._id;
+  User.findOne({ _id: userId })
+    .then((user) => {
+      if (user) {
+        res.send(user);
+      } else {
+        next(new NotFoundError('Пользователь по указанному _id не найден.'));
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
     });
 };

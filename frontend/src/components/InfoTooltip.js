@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import success from "../images/success.svg";
 import fail from "../images/fail.svg";
 

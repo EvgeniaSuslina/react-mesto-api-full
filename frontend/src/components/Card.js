@@ -5,17 +5,11 @@ function Card({ card, onCardClick, onCardLike, onCardDelete}) {
 
 const currentUser = useContext(CurrentUserContext);
 
-// Определяем, являемся ли мы владельцем текущей карточки
-const isOwn = card.owner._id === currentUser._id;
-// Создаём переменную, которую после зададим в `className` для кнопки удаления
-const cardDeleteButtonClassName = (
-  `group__element-trash ${isOwn ? 'group__element-trash' : 'group__element-trash-hide'}`); 
- 
-// Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-const isLiked = card.likes.some(i => i._id === currentUser._id);
-// Создаём переменную, которую после зададим в `className` для кнопки лайка
-const cardLikeButtonClassName = (
-`group__element-like ${isLiked ? 'group__element-like_liked': 'group__element-like'}`); 
+const isOwn = card.owner === currentUser._id;
+const cardDeleteButtonClassName = (`group__element-trash ${!isOwn && 'group__element-trash-hide'}`);  
+const isLiked = card.likes.some(i => i === currentUser._id);
+
+const cardLikeButtonClassName =  isLiked ? 'group__element-like_liked' : '';
 
   function handleCardClick() {
     onCardClick(card);
@@ -24,10 +18,10 @@ const cardLikeButtonClassName = (
   function handleLikeClick(){
     onCardLike(card)
   }
-
+  
   function handleDeleteClick() {
     onCardDelete(card);
-  }  
+  }
 
   return (
     <li className="group__element card">
@@ -42,7 +36,7 @@ const cardLikeButtonClassName = (
       <div className="group__element-caption">
         <h2 className="group__element-text">{card.name}</h2>
         <div className="group__like">
-          <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button"></button>
+          <button className={`group__element-like ${ cardLikeButtonClassName }`} onClick={handleLikeClick} type="button"></button>
           <h3 className="group__like-counter">{card.likes.length}</h3>
         </div>
       </div>

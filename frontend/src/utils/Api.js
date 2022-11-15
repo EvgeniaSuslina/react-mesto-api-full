@@ -29,6 +29,7 @@ class Api {
       })
       .then(this._checkResult);
     }
+        
 
     editUserInfo(name, description){
       return fetch(`${this._url}/users/me`,{
@@ -88,6 +89,7 @@ class Api {
       .then(this._checkResult);
     }
 
+
     editUserAvatar(link){
       return fetch(`${this._url}/users/me/avatar`, {
         method: 'PATCH', 
@@ -98,14 +100,19 @@ class Api {
       })
       .then(this._checkResult);
     }
-    
-  }  
 
-//создание экземпляра класса Api
+    updateTokenInHeaders() {
+      this._headers = {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+      }
+  }
+}
+
 const api = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-40',
+    url: 'https://api.evgenias.mesto.nomoredomains.icu',
     headers: {
-      authorization: '9484ac81-4ff0-44be-950c-3006408ead7d',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
       'Content-type': 'application/json'
     }
   });

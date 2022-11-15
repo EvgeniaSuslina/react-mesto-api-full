@@ -12,6 +12,13 @@ const regexUrl = /^(http[s]:\/\/)?[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]+(\.[a-zA-Z
 
 routesCards.get('/', getCards);
 
+routesCards.post('/', celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().pattern(regexUrl),
+  }),
+}), createCard);
+
 routesCards.delete('/:cardId', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().length(24).hex().required(),
@@ -29,12 +36,5 @@ routesCards.delete('/:cardId/likes', celebrate({
     cardId: Joi.string().length(24).hex().required(),
   }),
 }), deleteLikeFromCard);
-
-routesCards.post('/', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().pattern(regexUrl),
-  }),
-}), createCard);
 
 module.exports = routesCards;
