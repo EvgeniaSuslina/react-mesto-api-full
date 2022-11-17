@@ -10,9 +10,11 @@ const routesUsers = require('./routes/users');
 const routesCards = require('./routes/cards');
 const NotFoundError = require('./utils/errors/not_found');
 const { createUser, login } = require('./controllers/users');
-const { requestLogger, errorLogger } = require('./middlewares/logger')
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const regexUrl = /^(http[s]:\/\/)?[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=]+(\.[a-zA-Z]{2,}([a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;=])*)/;
 const allowedCors = require('./utils/allowedcors');
+
 const app = express();
 
 const { PORT = 3000 } = process.env;
@@ -36,7 +38,7 @@ app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-}); 
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -78,4 +80,3 @@ app.use((err, req, res, next) => {
   });
   next();
 });
-

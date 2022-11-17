@@ -5,7 +5,7 @@ const NotFoundError = require('../utils/errors/not_found');
 const ForbiddenError = require('../utils/errors/forbidden');
 
 module.exports.getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({}).sort({ createdAt: -1 })
     .then((cards) => res.send(cards))
     .catch(next);
 };
@@ -82,8 +82,6 @@ module.exports.deleteLikeFromCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Передан некорректный id'));
-      } else if (err.message === 'NotFound') {
-        next(new NotFoundError('Передан несуществующий _id карточки'));
       } else {
         next(err);
       }

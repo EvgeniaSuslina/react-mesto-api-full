@@ -264,14 +264,19 @@ function checkToken() {
   }
 
   function handleCardDelete(card) {
+    setIsLoading(true);
     api
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => {
+        setIsLoading(false);
+    });
   }
 
   return (
